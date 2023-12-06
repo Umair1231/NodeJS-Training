@@ -9,7 +9,7 @@ const server = http.createServer((req, res) => {
   let path = './views/'
   switch(req.url) {
     case('/'):
-      path += 'index.html';
+      path += 'temp.html';
       break;
     case('/about'):
       path += 'about.html';
