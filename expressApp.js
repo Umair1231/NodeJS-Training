@@ -2,12 +2,16 @@ const express = require('express');
 const axios = require('axios')
 const cors = require('cors');
 
-
+//create express app
 const app = express();
+
+//middleware for parsing JSON
 app.use(express.json());
+
+//allowing for API calls from frontend
 app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
-
+//listening for requests on port 3000
 app.listen(3000)
 
 app.get('/', async (req, res) => {

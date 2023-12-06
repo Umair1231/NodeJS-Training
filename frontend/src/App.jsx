@@ -17,8 +17,9 @@ function App() {
 
   return (
     <div>
-      {starWars.map((star) => (
-        <ul>
+      {starWars.length === 0 && <h3>Loading...</h3>}
+      {starWars.map((star, index) => (
+        <ul key={star.name}>
           <li>
             {star.name} <br/>
             {star.birth_year}
