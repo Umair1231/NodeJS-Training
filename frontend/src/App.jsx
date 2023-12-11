@@ -13,7 +13,7 @@ function App() {
   const [editIndex, setEditIndex] = useState(-1)
 
   const getStarWars = async () => {
-    const response = await axios.get('http://localhost:3000')
+    const response = await axios.get('http://localhost:3000/starwars')
     setStarWars(response.data)
   }
 
@@ -28,7 +28,7 @@ function App() {
     try
     {
       const Editname = { name: editValue }
-      const response = await axios.put(`http://localhost:3000/${name}`, Editname)
+      const response = await axios.put(`http://localhost:3000/starwars/${name}`, Editname)
       alert("Edited Succesfully")
       getStarWars()
     }
@@ -41,7 +41,7 @@ function App() {
   const handleDelete = async (name) => {
     try
     {
-      const response = await axios.delete(`http://localhost:3000/${name}`)
+      const response = await axios.delete(`http://localhost:3000/starwars/${name}`)
       alert("Deleted Succesfully")
       getStarWars()
     }
@@ -59,7 +59,7 @@ function App() {
     }
     try
     {
-      const response = await axios.post(`http://localhost:3000`, formData)
+      const response = await axios.post(`http://localhost:3000/starwars`, formData)
       if (response.status === 201)
       {
         alert("Added Successfully")
