@@ -15,9 +15,12 @@ const items = [
   { name: 'Obi-Wan Kenobi', birth_year: '57BBY' }
 ]
 
+const JSON_FILE_PATH = './data.json'
+
 
 module.exports = {
   PORT_NUMBER,
   FRONTEND_IP,
-  items
+  items,
+  JSON_FILE_PATH
 }

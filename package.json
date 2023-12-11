@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "startexpress": "nodemon expressApp.js"
+    "startexpress": "nodemon expressApp.js",
+    "startfile": "nodemon fileApp.js"
   },
   "author": "",
   "license": "ISC",
