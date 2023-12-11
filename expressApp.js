@@ -1,12 +1,19 @@
 const express = require('express');
 const axios = require('axios')
 const cors = require('cors');
-// const starWarsRoute = require('./routes/StarWarsRoute');
+const mongoose = require('mongoose');
 const constants = require('../NodeJS-Training/Constants')
 const fs = require('fs');
 
 //create express app
 const app = express();
+
+mongoose.connect(constants.DATABASE_URL)
+
+const db = mongoose.connection
+
+db.on('error', (error) => console.log(error))
+db.once('open', () => console.log('Connected to Database'))
 
 //middleware for parsing JSON
 app.use(express.json());

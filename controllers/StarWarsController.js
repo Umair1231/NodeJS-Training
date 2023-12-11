@@ -1,10 +1,12 @@
 const axios = require('axios');
 const constants = require('../Constants');
+const starWars = require('../models/starWars')
 
 const getStarWars = async (req, res) => {
   try
   {
-    res.json(constants.items)
+    const items = await starWars.find()
+    res.json(items)
   }
   catch(err)
   {
@@ -14,8 +16,8 @@ const getStarWars = async (req, res) => {
 }
 
 const getOneStarWars = async (req, res) => {
-  itemName = req.params.name
-  oneItem = constants.items.find(item => { item.name === itemName})
+  itemID = req.params.id
+  oneItem = await starWars.findOne( { _id: itemID})
   if(oneItem)
   {
     res.json(oneItem)
@@ -27,34 +29,48 @@ const postStarWars = async(req, res) => {
   const newItem = req.body;
   if(newItem)
   {
-    constants.items.push(newItem);
+    const newStarWars = new starWars({
+      name: newItem.name,
+      birth_year: newItem.birth_year
+    })
+
+    await newStarWars.save()
+    
     return res.status(201).json({ message: 'Added Successfully' });
   }
     return res.status(500).json({message: "Server Error"})
 }
 
 const putStarWars = async (req, res) => {
-  const itemName = req.params.name;
+  const itemID = req.params.id;
   const updatedItem = req.body.name;
-  let itemUpdated = false
-  constants.items.forEach(( item, index) => {
-    if(item.name === itemName)
-    {
-      item.name = updatedItem;
-      itemUpdated = true;
-      return res.status(201).json({ message: "Item updated" });
-    }
-  })
-  if(!itemUpdated)
-  {
-    return res.status(404).json({ message: "Item not found" });
+  const existingItem = await starWars.findById(itemID)
+  if(!existingItem) {
+    return res.status(404).json( { message: "Item not found" } )
   }
+  const updatedEntry = await starWars.findByIdAndUpdate(
+    itemID,
+    {
+      name: updatedItem
+    },
+    { new: true }
+  )
+
+  await updatedEntry.save()
+  res.status(200).json( { message:"updated successfully" } )
 }
 
 const deleteStarWars = async (req, res) => {
-  const itemName = req.params.name;
-  constants.items = constants.items.filter( item => item.name !== itemName)
-  return res.status(204).json({ message: "Item deleted" });
+  try
+  {
+    const itemID = req.params.id;
+    await starWars.findByIdAndDelete(itemID)
+    return res.status(204).json({ message: "Item deleted" });
+  }
+  catch(err)
+  {
+    console.log(err)
+  }
 }
 
 module.exports = {

@@ -15,6 +15,8 @@ const items = [
   { name: 'Obi-Wan Kenobi', birth_year: '57BBY' }
 ]
 
+const DATABASE_URL = 'mongodb://127.0.0.1:27017/nodeTrainingDatabase'
+
 const JSON_FILE_PATH = './data.json'
 
 
@@ -22,5 +24,6 @@ module.exports = {
   PORT_NUMBER,
   FRONTEND_IP,
   items,
-  JSON_FILE_PATH
+  JSON_FILE_PATH,
+  DATABASE_URL
 }

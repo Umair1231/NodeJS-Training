@@ -4,13 +4,13 @@ const starWarsController = require('../controllers/StarWarsController');
 
 router.get('/', starWarsController.getStarWars)
 
-router.get('/:name', starWarsController.getOneStarWars)
+router.get('/:id', starWarsController.getOneStarWars)
 
 router.post('/', starWarsController.postStarWars)
 
-router.put('/:name', starWarsController.putStarWars)
+router.put('/:id', starWarsController.putStarWars)
 
-router.delete('/:name', starWarsController.deleteStarWars)
+router.delete('/:id', starWarsController.deleteStarWars)
 
 
 module.exports = router

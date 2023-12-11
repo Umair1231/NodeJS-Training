@@ -21,14 +21,14 @@ function App() {
     getStarWars();
   },[])
   
-  const handleEdit = async (e, name) => {
+  const handleEdit = async (e, _id) => {
     e.preventDefault()
     setEditIndex(-1)
     setEditMode(false)
     try
     {
       const Editname = { name: editValue }
-      const response = await axios.put(`http://localhost:3000/starwars/${name}`, Editname)
+      const response = await axios.put(`http://localhost:3000/starwars/${_id}`, Editname)
       alert("Edited Succesfully")
       getStarWars()
     }
@@ -38,10 +38,10 @@ function App() {
     }
   }
 
-  const handleDelete = async (name) => {
+  const handleDelete = async (_id) => {
     try
     {
-      const response = await axios.delete(`http://localhost:3000/starwars/${name}`)
+      const response = await axios.delete(`http://localhost:3000/starwars/${_id}`)
       alert("Deleted Succesfully")
       getStarWars()
     }
@@ -76,18 +76,18 @@ function App() {
     <div>
       {starWars.length === 0 && <h3>Loading...</h3>}
       {starWars.map((star, index) => (
-        <ul key={star.name}>
+        <ul key={star._id}>
           <li>
             {star.name} <br/>
             {editMode && editIndex === index &&
-            <form onSubmit={(e) => handleEdit(e, star.name)}>
+            <form onSubmit={(e) => handleEdit(e, star._id)}>
               <input type='text' value={editValue} onChange={(e) => setEditValue(e.target.value)}/>
               <button type='submit'>Edit Value</button>
             </form>
             }
             {star.birth_year}
             <button onClick={ () => {setEditMode(true); setEditIndex(index)} }>Edit</button>
-            <button onClick={ () => handleDelete(star.name) }>Delete</button>
+            <button onClick={ () => handleDelete(star._id) }>Delete</button>
           </li>
         </ul>
       ))}
