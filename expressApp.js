@@ -17,7 +17,6 @@ mongoose.connect(constants.DATABASE_URL)
 const db = mongoose.connection
 
 db.on('error', (error) => console.log(error))
-db.once('open', () => console.log('Connected to Database'))
 
 //middleware for parsing JSON
 app.use(express.json());
@@ -33,8 +32,6 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-//listening for requests on port 3000
-app.listen(constants.PORT_NUMBER)
 
 fs.readdir('./routes/', (err, files) => {
   if (err) {
@@ -58,5 +55,9 @@ fs.readdir('./routes/', (err, files) => {
 });
 
 
-//Star Wars routes
-// app.use('/', starWarsRoute)
+//listening for requests on port 3000
+const serv = app.listen(constants.PORT_NUMBER)
+
+module.exports = {
+  serv
+}
