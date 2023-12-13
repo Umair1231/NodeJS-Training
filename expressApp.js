@@ -4,9 +4,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const constants = require('../NodeJS-Training/Constants')
 const fs = require('fs');
+const session = require('express-session')
+const passport = require('passport')
+
 
 //create express app
 const app = express();
+
 
 mongoose.connect(constants.DATABASE_URL)
 
@@ -20,6 +24,14 @@ app.use(express.json());
 
 //allowing for API calls from frontend
 app.use(cors({ origin: constants.FRONTEND_IP, credentials: true }));
+
+app.use(session({
+  secret: 'NodeTraining',
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 //listening for requests on port 3000
 app.listen(constants.PORT_NUMBER)
