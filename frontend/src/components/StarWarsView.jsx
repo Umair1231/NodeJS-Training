@@ -75,8 +75,10 @@ export default function StarWarsView() {
   const handleLogout = async () => {
     try
     {
-      const response = await axios.delete(`http://localhost:3000/auth/logout`)
-      if(response.status === 200)
+      const response = await axios.delete(`http://localhost:3000/auth/logout`, {
+        withCredentials: true
+      })
+      if(response.status === 201)
       {
         navigate('/login')
       }

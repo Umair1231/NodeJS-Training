@@ -15,10 +15,15 @@ export default function LoginView() {
       email: email,
       password: password
     }
-    const response = axios.post(`http://localhost:3000/auth/login`, formData)
+    const response = axios.post(`http://localhost:3000/auth/login`, {
+      formData,
+    }, {
+      withCredentials: true,
+    })
     response.then(result => {
-      if(result.request.status === 200)
+      if(result.status === 201)
       {
+        console.log("yo")
         navigate('/starwars')
       }
     })

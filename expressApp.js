@@ -6,6 +6,7 @@ const constants = require('../NodeJS-Training/Constants')
 const fs = require('fs');
 const session = require('express-session')
 const passport = require('passport')
+const cookieParser = require('cookie-parser')
 
 
 //create express app
@@ -24,13 +25,9 @@ app.use(express.json());
 //allowing for API calls from frontend
 app.use(cors({ origin: constants.FRONTEND_IP, credentials: true }));
 
-app.use(session({
-  secret: 'NodeTraining',
-  resave: false,
-  saveUninitialized: false
-}))
 app.use(passport.initialize())
-app.use(passport.session())
+
+app.use(cookieParser())
 
 
 fs.readdir('./routes/', (err, files) => {

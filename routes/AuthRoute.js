@@ -4,9 +4,9 @@ const AuthController = require('../controllers/AuthController')
 const passport = require('passport')
 
 
-router.post('/login', AuthController.checkNotAuthenticated, AuthController.userLogin)
+router.post('/login', AuthController.userLogin)
 
-router.post('/register', AuthController.checkNotAuthenticated, AuthController.registerUser)
+router.post('/register', AuthController.registerUser)
 
 router.delete('/logout', AuthController.userLogout)
 

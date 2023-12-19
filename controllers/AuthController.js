@@ -1,8 +1,8 @@
-const axios = require('axios');
-const constants = require('../Constants');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/User')
+const jwt = require('jsonwebtoken');
+
 
 const initializePassport = require('../passport-config')
 initializePassport(
@@ -46,59 +46,70 @@ const registerUser = async (req,res) => {
   }
 }
 
-const userLogin = async (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    try
-    {
-      if (err) {
-        return next(err);
-      }
-      if (!user) {
-        return res.redirect('/login');
-      }
-      req.logIn(user, (err) => {
-        if (err) {
-          return next(err);
-        }
-        return res.status(200).json({ message: 'Logged in successfully' });
-      });
-    }
-    catch(err)
-    {
-      return res.status(500).json({ message: err.message });
-    }
-  })(req,res,next)
+const userLogin = async (req, res) => {
+ try
+ {
+   const loginUser = await User.findOne( { email: req.body.formData.email });
+   if(!loginUser)
+   {
+    return res.status(404).json( { message: "User not found" } )
+   }
+   if(await bcrypt.compare(req.body.formData.password, loginUser.password))
+   {
+    const accessToken = jwt.sign({ sub: loginUser.id }, 'yourSecretKey', {
+      expiresIn: 3600,
+    });
+    res.cookie('AccessToken', accessToken, {
+      secure: false,
+      maxAge: 3600000,
+      Path: '/'
+    });
+    return res.status(201).json({message: "Login succesful"})
+   }
+   else
+   {
+    return res.status(401).json({message: "Wrong Password"})
+   }
+ }
+ catch(err)
+ {
+  console.log(err)
+  return res.status(500).json({message: "Internal server error"})
+ }
 }
 
 const userLogout = async (req,res) => {
-  req.logout((err) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error logging out' });
-    }
-    return res.status(200).json({ message: 'Logged out successfully' });
-  });
-}
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next()
+  try
+  {
+    res.clearCookie('AccessToken');
+    console.log("yo")
+    return res.status(201).json({message: "Logout succesful"})
   }
-
-  res.redirect('/login')
-}
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/')
+  catch(error)
+  {
+    console.error(error)
+    return res.status(500).json({message: "Internal server error"})
   }
-  next()
 }
+
+// function checkAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return next()
+//   }
+
+//   res.redirect('/login')
+// }
+
+// function checkNotAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return res.redirect('/')
+//   }
+//   next()
+// }
 
 
 module.exports = {
   registerUser,
-  checkAuthenticated,
-  checkNotAuthenticated,
   userLogout,
   initializePassport,
   userLogin

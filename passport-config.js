@@ -1,28 +1,28 @@
-const LocalStrategy = require('passport-local').Strategy
-const bcrypt = require('bcrypt')
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 function initialize(passport, getUserByEmail, getUserById) {
-  const authenticateUser = async (email, password, done) => {
-    const user = await getUserByEmail(email)
-    if (user == null) {
-      return done(null, false, { message: 'No user with that email' })
-    }
-    try {
-      if (await bcrypt.compare(password, user.password)) {
-        return done(null, user)
-      } else {
-        return done(null, false, { message: 'Password incorrect' })
-      }
-    } catch (e) {
-      return done(e)
-    }
-  }
+  const jwtOptions = {
+    secretOrKey: 'yourSecretKey', // Replace 'yourSecretKey' with your actual secret key
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  };
 
-  passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-  passport.serializeUser((user, done) => done(null, user._id))
-  passport.deserializeUser( async (id, done) => {
-    return done(null, await getUserById(id))
-  })
+  const jwtAuthenticate = async (payload, done) => {
+    try {
+      const user = await getUserById(payload.sub);
+      if (!user) {
+        return done(null, false, { message: 'User not found' });
+      }
+      return done(null, user);
+    } catch (error) {
+      return done(error, false);
+    }
+  };
+
+
+  passport.use(new JwtStrategy(jwtOptions, jwtAuthenticate));
 }
 
-module.exports = initialize
+module.exports = initialize;
