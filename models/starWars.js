@@ -14,6 +14,17 @@ const starWarsSchema = new mongoose.Schema({
   birth_year: {
     type: String,
     required: true
+  },
+
+  imagePath: {
+    type: String,
+    required: true
+  },
+
+  email: {
+    type: String,
+    ref: 'User',
+    required: true
   }
 })
 

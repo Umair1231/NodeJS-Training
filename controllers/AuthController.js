@@ -56,7 +56,7 @@ const userLogin = async (req, res) => {
    }
    if(await bcrypt.compare(req.body.formData.password, loginUser.password))
    {
-    const accessToken = jwt.sign({ sub: loginUser.id }, 'yourSecretKey', {
+    const accessToken = jwt.sign({ sub: loginUser.email }, 'yourSecretKey', {
       expiresIn: 3600,
     });
     res.cookie('AccessToken', accessToken, {
@@ -82,7 +82,6 @@ const userLogout = async (req,res) => {
   try
   {
     res.clearCookie('AccessToken');
-    console.log("yo")
     return res.status(201).json({message: "Logout succesful"})
   }
   catch(error)

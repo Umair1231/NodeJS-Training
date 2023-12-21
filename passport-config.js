@@ -11,7 +11,7 @@ function initialize(passport, getUserByEmail, getUserById) {
 
   const jwtAuthenticate = async (payload, done) => {
     try {
-      const user = await getUserById(payload.sub);
+      const user = await getUserByEmail(payload.sub);
       if (!user) {
         return done(null, false, { message: 'User not found' });
       }
