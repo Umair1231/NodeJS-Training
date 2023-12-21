@@ -13,10 +13,10 @@ function App() {
     <div>
       <Routes>
         <Route element={<PrivateRoutes />}>
-          <Route path='/' element={<HomeView />} />
           <Route path='starwars' element={<StarWarsView />} />
         </Route>
         <Route element={<PublicRoutes />}>
+          <Route path='/' element={<HomeView />} />
           <Route path='login' element={<LoginView />} />
           <Route path='register' element={<RegisterView />} />
         </Route>
