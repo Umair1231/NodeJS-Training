@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --watchAll",
     "start": "nodemon app.js",
-    "startexpress": "nodemon expressApp.js",
+    "startexpress": "npm expressApp.js",
     "startfile": "nodemon fileApp.js"
   },
   "author": "",
