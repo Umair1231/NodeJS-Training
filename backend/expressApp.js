@@ -17,6 +17,10 @@ mongoose.connect(process.env.MONGODB_CONNECT_URI)
 
 const db = mongoose.connection
 
+db.on('connected', () => {
+  console.log('Mongoose default connection is open');
+});
+
 db.on('error', (error) => console.log(error))
 
 //middleware for parsing JSON
@@ -53,7 +57,9 @@ fs.readdir('./routes/', (err, files) => {
 
 
 //listening for requests on port 3000
-const serv = app.listen(constants.PORT_NUMBER)
+const serv = app.listen(constants.PORT_NUMBER, () => {
+  console.log("Connected")
+})
 
 module.exports = {
   serv

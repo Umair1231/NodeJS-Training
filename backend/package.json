@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "dev": "nodemon expressApp.js",
     "test": "jest --watchAll",
     "start": "nodemon app.js",
     "startexpress": "node expressApp.js",

@@ -50,6 +50,8 @@ const userLogin = async (req, res) => {
  try
  {
    const loginUser = await User.findOne( { email: req.body.formData.email });
+   const test = await User.find()
+  //  console.log(test)
    if(!loginUser)
    {
     return res.status(404).json( { message: "User not found" } )
