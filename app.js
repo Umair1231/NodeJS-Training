@@ -1,33 +1,32 @@
+const express = require('express');
+const app = express();
 const http = require('http');
-const fs = require('fs');
+const { Server } = require('socket.io')
+const cors = require('cors');
+app.use(cors({ origin: "https://localhost:5173", credentials: true }));
 
-const server = http.createServer((req, res) => {
-  console.log(req.url, req.method);
+const server = http.createServer(app);
 
-  res.setHeader('Content-Type', 'text/html');
-
-  let path = './views/'
-  switch(req.url) {
-    case('/'):
-      path += 'temp.html';
-      break;
-    case('/about'):
-      path += 'about.html';
-      break;
-    default:
-      path += 'notfound.html';
-      break;
+const io = new Server(server, {
+  cors: {
+    origin: 'https://localhost:5173',
+    methods: ['GET', 'POST'],
   }
-  fs.readFile(path, (err, data) => {
-    if(err)
-    {
-      console.log(err);
-      res.end();
-    }
-    res.end(data)
-  })
-});
+})
 
-server.listen(3000, 'localhost', () => {
-  console.log("listening on port 3000")
-});
+io.on("connection", (socket) => {
+  console.log(`User connected to ${socket.id}`)
+
+  socket.on("join_room", (data) => {
+    socket.join(data)
+  })
+
+  socket.on("send_message", (data) => {
+    console.log(data)
+    socket.to(data.room).emit("receive_message", data)
+  })
+})
+
+server.listen(3000, () => {
+  console.log('listening on port 3000');
+})
