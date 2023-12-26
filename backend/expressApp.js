@@ -7,13 +7,13 @@ const fs = require('fs');
 const session = require('express-session')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
+require("dotenv").config();
 
 
 //create express app
 const app = express();
 
-
-mongoose.connect(constants.DATABASE_URL)
+mongoose.connect(process.env.MONGODB_CONNECT_URI)
 
 const db = mongoose.connection
 
