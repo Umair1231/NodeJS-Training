@@ -1,39 +1,39 @@
 const express = require('express');
 const axios = require('axios')
-const cors = require('cors');
-const mongoose = require('mongoose');
+// const cors = require('cors');
+// const mongoose = require('mongoose');
 // const constants = require('./Constants')
 const fs = require('fs');
-const session = require('express-session')
-const passport = require('passport')
-const cookieParser = require('cookie-parser')
+// const session = require('express-session')
+// const passport = require('passport')
+// const cookieParser = require('cookie-parser')
 const serverless = require("serverless-http");
 require("dotenv").config();
-const router = express.router();
+const router = express.Router();
 
 
 //create express app
 const app = express();
 
-mongoose.connect(process.env.MONGODB_CONNECT_URI)
+// mongoose.connect(process.env.MONGODB_CONNECT_URI)
 
-const db = mongoose.connection
+// const db = mongoose.connection
 
-db.on('connected', () => {
-  console.log('Mongoose default connection is open');
-});
+// db.on('connected', () => {
+//   console.log('Mongoose default connection is open');
+// });
 
-db.on('error', (error) => console.log(error))
+// db.on('error', (error) => console.log(error))
 
 //middleware for parsing JSON
 app.use(express.json());
 
-//allowing for API calls from frontend
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+// //allowing for API calls from frontend
+// app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
-app.use(passport.initialize())
+// app.use(passport.initialize())
 
-app.use(cookieParser())
+// app.use(cookieParser())
 
 
 router.get('/', (req,res) => {
