@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios')
 const cors = require('cors');
 const mongoose = require('mongoose');
-const constants = require('./Constants')
+// const constants = require('./Constants')
 const fs = require('fs');
 const session = require('express-session')
 const passport = require('passport')
@@ -29,7 +29,7 @@ db.on('error', (error) => console.log(error))
 app.use(express.json());
 
 //allowing for API calls from frontend
-app.use(cors({ origin: constants.FRONTEND_IP, credentials: true }));
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 app.use(passport.initialize())
 
