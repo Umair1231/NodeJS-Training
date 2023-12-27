@@ -9,7 +9,7 @@
     "start": "nodemon app.js",
     "startexpress": "node expressApp.js",
     "startfile": "nodemon fileApp.js",
-    "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build functions"
+    "build": "./node_modules/.bin/netlify-lambda build functions"
   },
   "author": "",
   "license": "ISC",
