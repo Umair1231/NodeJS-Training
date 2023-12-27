@@ -35,7 +35,7 @@ app.use(passport.initialize())
 app.use(cookieParser())
 
 
-fs.readdir('./routes/', (err, files) => {
+fs.readdir(`../routes`, (err, files) => {
   if (err) {
     console.error('Error reading directory:', err);
     return;
@@ -45,7 +45,7 @@ fs.readdir('./routes/', (err, files) => {
     if (file.endsWith('Route.js')) {
       let routeName = '/' + file.substring(0, file.indexOf('Route')).toLowerCase();
       const completeName = file.replace('.js', '');
-      const routeFunction = require(`./routes/${completeName}`);
+      const routeFunction = require(`../routes/${completeName}`);
 
       if (typeof routeFunction === 'function') {
         routeName = '/.netlify/functions/api' + routeName;
