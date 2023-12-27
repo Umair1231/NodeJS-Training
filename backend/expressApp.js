@@ -42,11 +42,12 @@ fs.readdir('./routes/', (err, files) => {
 
   files.forEach(file => {
     if (file.endsWith('Route.js')) {
-      const routeName = '/' + file.substring(0, file.indexOf('Route')).toLowerCase();
+      let routeName = '/' + file.substring(0, file.indexOf('Route')).toLowerCase();
       const completeName = file.replace('.js', '');
       const routeFunction = require(`./routes/${completeName}`);
 
       if (typeof routeFunction === 'function') {
+        routeName = '/.netlify/functions/api' + routeName;
         app.use(routeName, routeFunction);
       } else {
         console.error(`Route file '${completeName}' does not export a valid function.`);
