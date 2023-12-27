@@ -1,5 +1,6 @@
 [build]
-  functions-build = "functions"
+  functions = "functions"
+  publish = "dist"
 
 [dev]
   publish = "dist"
