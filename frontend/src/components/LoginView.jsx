@@ -15,7 +15,7 @@ export default function LoginView() {
       email: email,
       password: password
     }
-    const response = axios.post(`http://localhost:3000/auth/login`, {
+    const response = axios.post(`http://localhost:3000/.netlify/functions/api/auth/login`, {
       formData,
     }, {
       withCredentials: true,

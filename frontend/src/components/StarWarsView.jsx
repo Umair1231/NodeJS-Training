@@ -19,7 +19,7 @@ export default function StarWarsView() {
   
 
   const getStarWars = async () => {
-    const response = await axios.get('http://localhost:3000/starwars', {
+    const response = await axios.get('http://localhost:3000/.netlify/functions/api/starwars', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -38,7 +38,7 @@ export default function StarWarsView() {
     try
     {
       const Editname = { name: editValue }
-      const response = await axios.put(`http://localhost:3000/starwars/${_id}`, Editname , {
+      const response = await axios.put(`http://localhost:3000/.netlify/functions/api/starwars/${_id}`, Editname , {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -55,7 +55,7 @@ export default function StarWarsView() {
   const handleDelete = async (_id) => {
     try
     {
-      const response = await axios.delete(`http://localhost:3000/starwars/${_id}`, {
+      const response = await axios.delete(`http://localhost:3000/.netlify/functions/api/starwars/${_id}`, {
         headers: {
         Authorization: `Bearer ${accessToken}`,
         },
@@ -77,7 +77,7 @@ export default function StarWarsView() {
     formData.append('image', imageFile);
     try
     {
-      const response = await axios.post(`http://localhost:3000/starwars`, formData, {
+      const response = await axios.post(`http://localhost:3000/.netlify/functions/api/starwars`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${accessToken}`,
@@ -98,7 +98,7 @@ export default function StarWarsView() {
   const handleLogout = async () => {
     try
     {
-      const response = await axios.delete(`http://localhost:3000/auth/logout`, {
+      const response = await axios.delete(`http://localhost:3000/.netlify/functions/api/auth/logout`, {
         withCredentials: true
       })
       if(response.status === 201)

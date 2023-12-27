@@ -17,7 +17,7 @@ export default function RegisterView() {
       password: password
     }
     
-    const response = await axios.post(`http://localhost:3000/auth/register`, formData)
+    const response = await axios.post(`http://localhost:3000/.netlify/functions/api/auth/register`, formData)
     if(response.status === 201)
     {
       navigate('/login')
