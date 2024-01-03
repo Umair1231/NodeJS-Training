@@ -1,12 +1,11 @@
 const express = require('express');
-const axios = require('axios')
 const cors = require('cors');
 const mongoose = require('mongoose');
 const constants = require('./Constants')
 const fs = require('fs');
-const session = require('express-session')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
+const path = require('path')
 require("dotenv").config();
 
 
@@ -32,6 +31,8 @@ app.use(cors({ origin: constants.FRONTEND_IP, credentials: true }));
 app.use(passport.initialize())
 
 app.use(cookieParser())
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 fs.readdir('./routes/', (err, files) => {

@@ -129,7 +129,7 @@ export default function StarWarsView() {
             <br />
             {star.imagePath && 
             <img 
-            src={`http://localhost:5173/${star.imagePath}`}
+            src={`http://localhost:3000/${star.imagePath}`}
             style={{ maxWidth: '200px', maxHeight: '200px' }}
              />
             }
