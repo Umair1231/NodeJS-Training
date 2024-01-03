@@ -9,13 +9,14 @@ export default function LoginView() {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
+
   const handleFormSubmit = (e) => {
     e.preventDefault()
     const formData = {
       email: email,
       password: password
     }
-    const response = axios.post(`http://localhost:3000/auth/login`, {
+    const response = axios.post(`http://${import.meta.env.VITE_BACKEND_IP}:3000/auth/login`, {
       formData,
     }, {
       withCredentials: true,
