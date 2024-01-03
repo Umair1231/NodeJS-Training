@@ -1,6 +1,6 @@
 const PORT_NUMBER = 3000
 
-const FRONTEND_IP = 'http://localhost:5173'
+const FRONTEND_IP = 'http://10.164.2.136:5173/'
 
 const items = [
   { name: 'Luke Skywalker', birth_year: '19BBY' },
