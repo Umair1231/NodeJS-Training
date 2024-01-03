@@ -24,7 +24,6 @@ export default function LoginView() {
     response.then(result => {
       if(result.status === 201)
       {
-        console.log("yo")
         navigate('/starwars')
       }
     })

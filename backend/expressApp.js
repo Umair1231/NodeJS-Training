@@ -26,7 +26,7 @@ db.on('error', (error) => console.log(error))
 app.use(express.json());
 
 //allowing for API calls from frontend
-app.use(cors({ origin: constants.FRONTEND_IP, credentials: true }));
+app.use(cors({ origin: process.env.FRONTEND_IP, credentials: true }));
 
 app.use(passport.initialize())
 
